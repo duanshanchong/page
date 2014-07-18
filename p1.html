@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Eraser Demo</title>
+    <style type="text/css">
+        body{
+            height:1000px;
+            background: red;
+        }
+        #eraserContainer,#real{
+            /*background: #0000ff;*/
+            position:absolute;
+            width: 100%;
+            height:100%;
+            z-index: 2;
+
+        }
+        #real{
+            position: absolute;
+            z-index: 1;
+            background: url("images/p2.png") no-repeat;
+        }
+        #drawPercent {
+            color:#F60;
+        }
+        #eraser{
+            background: url("images/p1.png") no-repeat;
+            width: 114px;
+            height: 173px;
+            top: 100px;
+            left: 20px;
+            position: absolute;
+            z-index: 3;
+        }
+        #eraserCell{
+
+            margin: 5px 0 0 5px;
+            width: 35px;
+            height: 35px;
+        }
+    </style>
+</head>
+<body>
+<button id="freshBtn">刷新</button><label>已刮开 <span id="drawPercent">0%</span> 区域。</label>
+<div id="real">
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+<a href="#">aaaa</a>
+</div>
+<div id="eraserContainer"></div>
+<div id="eraser">
+    <div id="eraserCell"></div>
+</div>
+<script src="scripts/jquery.js"></script>
+<script src="scripts/eraser.js"></script>
+<script src="scripts/jquery.pep.js"></script>
+<script>
+    window.onload = function () {
+        window.eraserArea = new Eraser('eraserContainer','eraser','#959595', 'color', 300, 480, drawPercent);
+//        eraserArea.init('http://www.baidu.com/img/bdlogo.gif', 'image');
+//        eraserArea.init('images/p2.png', 'image');
+        eraserArea.init('aaa', 'text');
+
+
+        document.getElementById('freshBtn').onclick = function() {
+            drawPercentNode.innerHTML = '0%';
+            eraserArea.init(getRandomStr(10), 'text');
+        }
+
+        var drawPercentNode = document.getElementById('drawPercent');
+
+        function drawPercent(percent) {
+            if(percent >=90){
+                $("#eraserContainer").hide();
+            }
+            drawPercentNode.innerHTML = percent + '%';
+        }
+    }
+
+    function getRandomStr(len) {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for( var i=0; i < len; i++ )
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        return text;
+    }
+
+    $(function(){
+        var eraser = $('#eraser').pep({shouldEase:false
+        ,
+            drag: function(evt,obj){
+                console.log(obj.cssX +" " +  obj.cssY);
+                var x = $('#eraser').get(0).getBoundingClientRect().left;
+                var y = $('#eraser').get(0).getBoundingClientRect().top;
+                console.log(x+":" + y)
+//                if(obj.cssX != undefined){
+                    eraserArea.drawPoint(x, y);
+//                }
+            }
+
+        });
+//        debugger;
+    });
+</script>
+</body>
+</html>

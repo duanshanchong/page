@@ -1,7 +1,67 @@
+<!DOCTYPE html>
 <html>
-	<head>
-	</head>
-	<body>
-		hello world !
-	</body>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Demo</title>
+    <link href='styles/onepage-scroll.css' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+        section{
+            width: 320px;
+            height: 480px;
+            background: red;
+        }
+        .next-btn{
+            width: 50px;
+            height: 30px;
+            background: #808080;
+            position: absolute;
+            z-index: 9999;
+            margin: auto;
+            left: 0; bottom: 10px; right: 0;
+
+        }
+
+    </style>
+    <script type="text/javascript" src="scripts/jquery.js"></script>
+    <script type="text/javascript" src="scripts/jquery.onepage-scroll.js"></script>
+</head>
+<body>
+<div id="main">
+    <section>第一屏</section>
+    <section>第二屏</section>
+    <section>第三屏</section>
+    <section>第四屏</section>
+</div>
+<div class="next-btn">
+    下一页
+</div>
+</body>
+
+<script>
+
+
+    $(function(){
+        $("#main").onepage_scroll({
+            sectionContainer: "section",
+            easing: "ease",
+            animationTime: 1000,
+            pagination: false,
+            updateURL: false,
+            beforeMove: function(index) {},
+            afterMove: function(index) {},
+            loop: false,
+            keyboard: false,
+            responsiveFallback: false,
+            direction: "vertical"
+        });
+
+        $(".next-btn").click(function(){
+            $("#main").moveDown();
+        });
+    });
+
+
+</script>
+
 </html>
